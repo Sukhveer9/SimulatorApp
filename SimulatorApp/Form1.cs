@@ -36,7 +36,7 @@ namespace SimulatorApp
             {
                 sFilePath = openfileDialog.FileName;
 
-                var dll = Assembly.LoadFile(sFilePath);
+                var dll = Assembly.LoadFile(sFilePath);//
                 string sName = dll.GetName().Name;
                 Type type = dll.GetType("GameSimulator." + sName);
                 m_GameSimulator = (GameSimulator.GameSimulator)Activator.CreateInstance(type);//(simType)m_GameSimulator;
