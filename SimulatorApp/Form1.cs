@@ -7,14 +7,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using GameSimulator;
+//using GameSimulator;
 using System.Reflection;
 
 namespace SimulatorApp
 {
     public partial class Form1 : Form
     {
-        private GameSimulator.GameSimulator m_GameSimulator;
+       // private GameSimulator.GameSimulator m_GameSimulator;
 
         public Form1()
         {
@@ -35,12 +35,14 @@ namespace SimulatorApp
             if (openfileDialog.ShowDialog() == DialogResult.OK)
             {
                 sFilePath = openfileDialog.FileName;
-
-                var dll = Assembly.LoadFile(sFilePath);//
+                var dll = Assembly.LoadFrom(sFilePath);//
                 string sName = dll.GetName().Name;
-                Type type = dll.GetType("GameSimulator." + sName);
-                m_GameSimulator = (GameSimulator.GameSimulator)Activator.CreateInstance(type);//(simType)m_GameSimulator;
-                m_GameSimulator.Initialize();
+                Type type = dll.GetType(sName + "." + sName);
+                Type[] types = dll.GetTypes();
+
+                
+               // m_GameSimulator = (GameSimulator.GameSimulator)Activator.CreateInstance(type);//(simType)m_GameSimulator;
+                //m_GameSimulator.Initialize();
                 //this.dataGridView1
             }
         }
@@ -52,7 +54,7 @@ namespace SimulatorApp
             if (openfileDialog.ShowDialog() == DialogResult.OK)
             {
                 sFilePath = openfileDialog.FileName;
-                m_GameSimulator.LoadXML(sFilePath);
+                //m_GameSimulator.LoadXML(sFilePath);
             }
         }
 
