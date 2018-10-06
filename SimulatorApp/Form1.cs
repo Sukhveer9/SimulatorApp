@@ -14,7 +14,7 @@ namespace SimulatorApp
 {
     public partial class Form1 : Form
     {
-       // private GameSimulator.GameSimulator m_GameSimulator;
+        private GameSimulator.GameSimulator m_GameSimulator;
 
         public Form1()
         {
@@ -24,7 +24,17 @@ namespace SimulatorApp
 
         private void Initialize()
         {
-           // m_GameSimulator = new GameSimulator.GameSimulator();
+            m_GameSimulator = new GameSimulator.GameSimulator();
+            m_GameSimulator.m_UpdateSpin = SpinUpdated;
+        }
+
+        public void SpinUpdated(int num)
+        {
+            MethodInvoker inv = delegate
+            {
+                this.label.Text = num.ToString();
+            };
+            this.Invoke(inv);
         }
 
 
@@ -35,15 +45,8 @@ namespace SimulatorApp
             if (openfileDialog.ShowDialog() == DialogResult.OK)
             {
                 sFilePath = openfileDialog.FileName;
-                var dll = Assembly.LoadFrom(sFilePath);//
-                string sName = dll.GetName().Name;
-                Type type = dll.GetType(sName + "." + sName);
-                Type[] types = dll.GetTypes();
 
-                
-               // m_GameSimulator = (GameSimulator.GameSimulator)Activator.CreateInstance(type);//(simType)m_GameSimulator;
-                //m_GameSimulator.Initialize();
-                //this.dataGridView1
+                 m_GameSimulator.LoadDll(sFilePath);
             }
         }
 
@@ -54,18 +57,14 @@ namespace SimulatorApp
             if (openfileDialog.ShowDialog() == DialogResult.OK)
             {
                 sFilePath = openfileDialog.FileName;
-                //m_GameSimulator.LoadXML(sFilePath);
+                m_GameSimulator.LoadXML(sFilePath);
             }
         }
 
         private void StartGameButton_Click(object sender, EventArgs e)
         {
-
+            m_GameSimulator.StartSpin(10000);
         }
 
-        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-
-        }
     }
 }
